@@ -1,7 +1,8 @@
 import { useSelector } from "react-redux";
 
-const PokemonItems = ({ pokemon, setEditItemId }) => {
 
+const PokemonItems = ({ pokemon, setEditItemId }) => {
+ 
   const items = useSelector((state) => {
     if (!pokemon.items) return null;
     return pokemon.items.map(itemId => state.items[itemId]);

@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 const LOAD = 'pokemon/LOAD';
 const LOAD_TYPES = 'pokemon/LOAD_TYPES';
 const ADD_ONE = 'pokemon/ADD_ONE';
-
+const GET_ONE = 'GET-ONE';
 const load = list => ({
   type: LOAD,
   list
@@ -19,6 +19,15 @@ const addOnePokemon = pokemon => ({
   type: ADD_ONE,
   pokemon
 });
+const getonePokemon = id => ({
+  type: ADD_ONE,
+  id
+});
+
+const Pokemon = pokemon => ({
+  type: GET_ONE,
+  info: pokemon
+});
 
 export const getPokemon = () => async dispatch => {
 
@@ -27,7 +36,18 @@ export const getPokemon = () => async dispatch => {
   if (response.ok) {
     const list = await response.json();
     dispatch(load(list));
-  
+
+  }
+};
+
+export const onePokemon = (id) => async dispatch => {
+
+  const response = await fetch(`/api/pokemon/${id}`);
+
+  if (response.ok) {
+    const detail = await response.json();
+    dispatch(addOnePokemon(detail));
+
   }
 };
 
@@ -53,7 +73,7 @@ const sortList = (list) => {
 
 const pokemonReducer = (state = initialState, action) => {
   switch (action.type) {
-    case LOAD: 
+    case LOAD:
       const allPokemon = {};
       action.list.forEach(pokemon => {
         allPokemon[pokemon.id] = pokemon;
@@ -63,12 +83,12 @@ const pokemonReducer = (state = initialState, action) => {
         ...state,
         list: sortList(action.list)
       };
-    case LOAD_TYPES: 
+    case LOAD_TYPES:
       return {
         ...state,
         types: action.types
       };
-    case ADD_ONE: 
+    case ADD_ONE:
       if (!state[action.pokemon.id]) {
         const newState = {
           ...state,
@@ -86,7 +106,7 @@ const pokemonReducer = (state = initialState, action) => {
           ...action.pokemon
         }
       };
-    case LOAD_ITEMS: 
+    case LOAD_ITEMS:
       return {
         ...state,
         [action.pokemonId]: {
@@ -113,6 +133,7 @@ const pokemonReducer = (state = initialState, action) => {
           items: [...state[action.item.pokemonId].items, action.item.id]
         }
       };
+
     default:
       return state;
   }
