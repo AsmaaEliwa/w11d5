@@ -51,6 +51,27 @@ export const onePokemon = (id) => async dispatch => {
   }
 };
 
+
+export const updatePokemon = (pokemon) => async dispatch => {
+  console.log(pokemon)
+  const response = await fetch(`/api/pokemon/${pokemon.id}`, {
+    method: 'PUT',
+    body: JSON.stringify(pokemon),
+    headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+    }});
+
+  if (response.ok) {
+    const data = await response.json();
+    // debugger
+    dispatch(addOnePokemon (data));
+  }else {
+    throw new Error('Failed to edit Pokémon');
+  }
+};
+
+
 export const getPokemonTypes = () => async dispatch => {
   const response = await fetch(`/api/pokemon/types`);
 

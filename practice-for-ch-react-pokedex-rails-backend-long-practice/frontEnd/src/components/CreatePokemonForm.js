@@ -133,7 +133,7 @@ const CreatePokemonForm = ({ hideForm }) => {
 
 export default CreatePokemonForm;
 
-export let createaPokemon = (pokemon) => async dispatch => {
+export const createaPokemon = (pokemon) => async dispatch => {
   console.log(pokemon)
   const response = await fetch(`/api/pokemon`, {
     method: 'POST',

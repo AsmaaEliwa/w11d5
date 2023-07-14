@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getPokemonTypes } from '../store/pokemon';
+import { getPokemonTypes, updatePokemon, addOnePokemon } from '../store/pokemon';
 
 const EditPokemonForm = ({ pokemon, hideForm }) => {
   const pokeTypes = useSelector(state => state.pokemon.types);
@@ -23,7 +23,6 @@ const EditPokemonForm = ({ pokemon, hideForm }) => {
   const updateType = (e) => setType(e.target.value);
   const updateMove1 = (e) => setMove1(e.target.value);
   const updateMove2 = (e) => setMove2(e.target.value);
-
   useEffect(() => {
     dispatch(getPokemonTypes());
   }, [dispatch]);
@@ -31,18 +30,19 @@ const EditPokemonForm = ({ pokemon, hideForm }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // const payload = {
-    //   ...pokemon,
-    //   number,
-    //   attack,
-    //   defense,
-    //   imageUrl,
-    //   name,
-    //   type,
-    //   move1,
-    //   move2,
-    //   moves: [move1, move2]
-    // };
+    const payload = {
+      ...pokemon,
+      number,
+      attack,
+      defense,
+      imageUrl,
+      name,
+      type,
+      move1,
+      move2,
+      moves: [move1, move2]
+    };
+    dispatch(updatePokemon(payload))
     
     let updatedPokemon;
     if (updatedPokemon) {
