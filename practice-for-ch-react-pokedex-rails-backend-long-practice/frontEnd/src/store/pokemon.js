@@ -15,7 +15,7 @@ const loadTypes = types => ({
   types
 });
 
-const addOnePokemon = pokemon => ({
+export const addOnePokemon = pokemon => ({
   type: ADD_ONE,
   pokemon
 });
